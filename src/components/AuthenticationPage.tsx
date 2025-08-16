@@ -50,7 +50,7 @@ export default function AuthenticationPage({ onBack, onAuthenticated }: Authenti
 
         setIsLoading(true);
         try {
-            const res = await fetch(`${API_BASE}/api/users/login/`, {
+            const res = await fetch(`${API_BASE}/login/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -81,7 +81,7 @@ export default function AuthenticationPage({ onBack, onAuthenticated }: Authenti
             setIsLoading(true);
             try {
                 // 2️⃣ Send code to backend for exchange
-                const res = await fetch(`${API_BASE}/api/users/google-auth-code/`, {
+                const res = await fetch(`${API_BASE}/google-auth-code/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code }),

@@ -114,7 +114,7 @@ export default function UploadFilePage({ onBack, onComplete }: UploadFilePagePro
 
         try {
             const token = localStorage.getItem('accessToken');
-            const response = await fetch(`${API_BASE}/api/users/documents/`, {
+            const response = await fetch(`${API_BASE}/documents/`, {
                 method: "POST",
                 body: formData,
                 headers: {

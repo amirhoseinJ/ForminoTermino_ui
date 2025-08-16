@@ -74,7 +74,7 @@ export default function FormChatPage({ onNavigate, formData }: FormChatPageProps
 
             // Follows your existing API shape: /sessions and /sessions/:id/message
             // Using a plausible endpoint for final confirmation:
-            const res = await fetch(`${API_BASE}/api/users/form-chat/sessions/${sessionId}/confirm`, {
+            const res = await fetch(`${API_BASE}/form-chat/sessions/${sessionId}/confirm`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -130,7 +130,7 @@ export default function FormChatPage({ onNavigate, formData }: FormChatPageProps
             setAiThinking(true);
             try {
                 const token = localStorage.getItem("accessToken"); // your JWT access token
-                const res = await fetch(`${API_BASE}/api/users/form-chat/sessions`, {
+                const res = await fetch(`${API_BASE}/form-chat/sessions`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -217,7 +217,7 @@ export default function FormChatPage({ onNavigate, formData }: FormChatPageProps
 
         try {
             const token = localStorage.getItem("accessToken");
-            const res = await fetch(`${API_BASE}/api/users/form-chat/sessions/${sessionId}/message`, {
+            const res = await fetch(`${API_BASE}/form-chat/sessions/${sessionId}/message`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

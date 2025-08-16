@@ -115,7 +115,7 @@ export default function ForminoMainScreen({ onNavigate }: ForminoMainScreenProps
                 .map((m) => (m.type === "ai" ? `AI:\n${m.content}` : `User:\n${m.content}`))
                 .join("\n");
 
-            const response = await fetch(`${API_BASE}/api/users/chat/`, {
+            const response = await fetch(`${API_BASE}/chat/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

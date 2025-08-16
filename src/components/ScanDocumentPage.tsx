@@ -105,7 +105,7 @@ export default function ScanDocumentPage({ onBack, onComplete }: ScanDocumentPag
 
         try {
             const token = localStorage.getItem('accessToken');
-            const res = await fetch(`${API_BASE}/api/users/documents/`, {
+            const res = await fetch(`${API_BASE}/documents/`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

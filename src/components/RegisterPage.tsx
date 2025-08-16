@@ -78,7 +78,7 @@ export default function RegisterPage({ onBack, onSuccess }: RegisterPageProps) {
         const timeoutId = setTimeout(() => controller.abort(), 10000);
 
         try {
-            const res = await fetch(`${API_BASE}/api/users/register/`, {
+            const res = await fetch(`${API_BASE}/register/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -129,7 +129,7 @@ export default function RegisterPage({ onBack, onSuccess }: RegisterPageProps) {
             setIsLoading(true);
             try {
                 // 2️⃣ Send code to backend for exchange
-                const res = await fetch(`${API_BASE}/api/users/google-auth-code/`, {
+                const res = await fetch(`${API_BASE}/google-auth-code/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code }),

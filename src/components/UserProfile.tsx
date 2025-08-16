@@ -136,7 +136,7 @@ export default function UserProfile({onNavigate}: UserProfileProps) {
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
 
-        fetch(`${API_BASE}/api/users/profile/`, {
+        fetch(`${API_BASE}/profile/`, {
             // Remove credentials if using JWT (not needed)
             headers: {
                 "Content-Type": "application/json",
@@ -180,7 +180,7 @@ export default function UserProfile({onNavigate}: UserProfileProps) {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
-        fetch(`${API_BASE}/api/users/documents/`, {
+        fetch(`${API_BASE}/documents/`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
@@ -240,7 +240,7 @@ export default function UserProfile({onNavigate}: UserProfileProps) {
             body.profileImage = profileImagePreview;
         }
 
-        fetch(`${API_BASE}/api/users/profile/`, {
+        fetch(`${API_BASE}/profile/`, {
             method: 'PATCH',  // Use PATCH for partial update, or PUT for full update
             headers: {
                 "Content-Type": "application/json",
@@ -391,7 +391,7 @@ export default function UserProfile({onNavigate}: UserProfileProps) {
         // 2) If you have a backend DELETE endpoint, call it here:
         try {
             const token = localStorage.getItem("accessToken");
-            const res = await fetch(`${API_BASE}/api/users/documents/${id}/`, {
+            const res = await fetch(`${API_BASE}/documents/${id}/`, {
                 method: "DELETE",
                 headers: {"Authorization": `Bearer ${token}`},
             });
@@ -670,7 +670,7 @@ export default function UserProfile({onNavigate}: UserProfileProps) {
                                                                     onClick={async () => {
                                                                         const token = localStorage.getItem("accessToken");
                                                                         await fetch(
-                                                                            `${API_BASE}/api/users/documents/${doc.documentId}/`,
+                                                                            `${API_BASE}/documents/${doc.documentId}/`,
                                                                             {
                                                                                 method: "PATCH",
                                                                                 headers: {

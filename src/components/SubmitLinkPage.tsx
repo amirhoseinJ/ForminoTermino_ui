@@ -52,7 +52,7 @@ export default function SubmitLinkPage({ onBack, onComplete }: SubmitLinkPagePro
 
         try {
             const token = localStorage.getItem("accessToken");
-            const resp = await fetch(`${API_BASE}/api/users/documents/from-link/`, {
+            const resp = await fetch(`${API_BASE}/documents/from-link/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
