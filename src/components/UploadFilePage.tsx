@@ -9,7 +9,7 @@ interface UploadFilePageProps {
 }
 
 
-const API_BASE = import.meta.env.BASE_URL
+const API_BASE = import.meta.env.VITE_API_BASE
 
 export default function UploadFilePage({ onBack, onComplete }: UploadFilePageProps) {
 

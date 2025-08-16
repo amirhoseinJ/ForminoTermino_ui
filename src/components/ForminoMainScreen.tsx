@@ -12,7 +12,7 @@ import MarkdownMessage from "./MarkdownMessage";
 
 
 
-const API_BASE = import.meta.env.BASE_URL
+const API_BASE = import.meta.env.VITE_API_BASE
 
 interface ForminoMainScreenProps {
     onNavigate: (page: Page) => void;
