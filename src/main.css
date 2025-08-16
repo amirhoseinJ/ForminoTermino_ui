@@ -1,0 +1,382 @@
+@import "tailwindcss";
+
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+    --font-size: 14px;
+    --background: #0a0a0f;
+    --foreground: #e2e8f0;
+    --card: rgba(26, 32, 44, 0.8);
+    --card-foreground: #f7fafc;
+    --popover: rgba(26, 32, 44, 0.9);
+    --popover-foreground: #f7fafc;
+    --primary: #8b5cf6;
+    --primary-foreground: #ffffff;
+    --secondary: rgba(45, 55, 72, 0.6);
+    --secondary-foreground: #f7fafc;
+    --muted: rgba(45, 55, 72, 0.4);
+    --muted-foreground: #a0aec0;
+    --accent: rgba(139, 92, 246, 0.1);
+    --accent-foreground: #f7fafc;
+    --destructive: #fc8181;
+    --destructive-foreground: #1a202c;
+    --border: rgba(139, 92, 246, 0.2);
+    --input: rgba(26, 32, 44, 0.6);
+    --input-background: rgba(26, 32, 44, 0.8);
+    --switch-background: #4a5568;
+    --font-weight-medium: 500;
+    --font-weight-normal: 400;
+    --ring: #8b5cf6;
+    --chart-1: #8b5cf6;
+    --chart-2: #10b981;
+    --chart-3: #f59e0b;
+    --chart-4: #ef4444;
+    --chart-5: #06b6d4;
+    --radius: 1rem;
+    --sidebar: rgba(26, 32, 44, 0.8);
+    --sidebar-foreground: #f7fafc;
+    --sidebar-primary: #8b5cf6;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: rgba(139, 92, 246, 0.1);
+    --sidebar-accent-foreground: #f7fafc;
+    --sidebar-border: rgba(139, 92, 246, 0.2);
+    --sidebar-ring: #8b5cf6;
+    --success: #10b981;
+    --success-foreground: #ffffff;
+    --info: #8b5cf6;
+    --info-foreground: #ffffff;
+    --warning: #f59e0b;
+    --warning-foreground: #ffffff;
+    --neon-green: #10b981;
+    --neon-purple: #8b5cf6;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glow-purple: rgba(139, 92, 246, 0.5);
+    --glow-green: rgba(16, 185, 129, 0.5);
+}
+
+.dark {
+    --background: #0a0a0f;
+    --foreground: #e2e8f0;
+    --card: rgba(26, 32, 44, 0.8);
+    --card-foreground: #f7fafc;
+    --popover: rgba(26, 32, 44, 0.9);
+    --popover-foreground: #f7fafc;
+    --primary: #8b5cf6;
+    --primary-foreground: #ffffff;
+    --secondary: rgba(45, 55, 72, 0.6);
+    --secondary-foreground: #f7fafc;
+    --muted: rgba(45, 55, 72, 0.4);
+    --muted-foreground: #a0aec0;
+    --accent: rgba(139, 92, 246, 0.1);
+    --accent-foreground: #f7fafc;
+    --destructive: #fc8181;
+    --destructive-foreground: #1a202c;
+    --border: rgba(139, 92, 246, 0.2);
+    --input: rgba(26, 32, 44, 0.6);
+    --ring: #8b5cf6;
+    --font-weight-medium: 500;
+    --font-weight-normal: 400;
+    --chart-1: #8b5cf6;
+    --chart-2: #10b981;
+    --chart-3: #f59e0b;
+    --chart-4: #ef4444;
+    --chart-5: #06b6d4;
+    --sidebar: rgba(26, 32, 44, 0.8);
+    --sidebar-foreground: #f7fafc;
+    --sidebar-primary: #8b5cf6;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: rgba(139, 92, 246, 0.1);
+    --sidebar-accent-foreground: #f7fafc;
+    --sidebar-border: rgba(139, 92, 246, 0.2);
+    --sidebar-ring: #8b5cf6;
+    --success: #10b981;
+    --success-foreground: #ffffff;
+    --info: #8b5cf6;
+    --info-foreground: #ffffff;
+    --warning: #f59e0b;
+    --warning-foreground: #ffffff;
+    --neon-green: #10b981;
+    --neon-purple: #8b5cf6;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glow-purple: rgba(139, 92, 246, 0.5);
+    --glow-green: rgba(16, 185, 129, 0.5);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-input-background: var(--input-background);
+    --color-switch-background: var(--switch-background);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-info: var(--info);
+    --color-info-foreground: var(--info-foreground);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-neon-green: var(--neon-green);
+    --color-neon-purple: var(--neon-purple);
+    --color-glass-bg: var(--glass-bg);
+    --color-glass-border: var(--glass-border);
+    --color-glow-purple: var(--glow-purple);
+    --color-glow-green: var(--glow-green);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        background-image:
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+    :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+        h1 {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+        }
+
+        h2 {
+            font-size: var(--text-xl);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+        }
+
+        h3 {
+            font-size: var(--text-lg);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+        }
+
+        h4 {
+            font-size: var(--text-base);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+        }
+
+        p {
+            font-size: var(--text-base);
+            font-weight: var(--font-weight-normal);
+            line-height: 1.5;
+        }
+
+        label {
+            font-size: var(--text-base);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+        }
+
+        button {
+            font-size: var(--text-base);
+            font-weight: var(--font-weight-medium);
+            line-height: 1.5;
+        }
+
+        input {
+            font-size: var(--text-base);
+            font-weight: var(--font-weight-normal);
+            line-height: 1.5;
+        }
+    }
+}
+
+html {
+    font-size: var(--font-size);
+}
+
+/* Glassmorphism styles */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-glow-purple {
+    box-shadow: 0 0 20px var(--glow-purple), 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-glow-green {
+    box-shadow: 0 0 20px var(--glow-green), 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom animations */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+        transform: scale(1.02);
+    }
+}
+
+@keyframes neon-glow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+    }
+    50% {
+        box-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green), 0 0 40px var(--neon-green);
+    }
+}
+
+@keyframes bounce-scale {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes geometric-float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.7;
+    }
+}
+
+@keyframes checkmark-draw {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes confetti-pop {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1) rotate(180deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-in-bottom {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.neon-glow {
+    animation: neon-glow 2s ease-in-out infinite;
+}
+
+.bounce-scale {
+    animation: bounce-scale 0.3s ease-in-out;
+}
+
+.geometric-float {
+    animation: geometric-float 4s ease-in-out infinite;
+}
+
+.slide-in-bottom {
+    animation: slide-in-bottom 0.3s ease-out;
+}
+
+.bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.checkmark-draw {
+    animation: checkmark-draw 0.8s ease-in-out forwards;
+}
+
+.confetti-pop {
+    animation: confetti-pop 1s ease-out forwards;
+}

@@ -1,0 +1,25 @@
+export type Page =
+    | "landing"
+    | "auth"
+    | "hub"
+    | "formino"
+    | "termino"
+    | "termino-ai-booking"
+    | "termino-self-booking"
+    | "termino-manage-bookings"
+    | "termino-calendar"
+    | "profile"
+    | "settings"
+    | "pricing"
+    | "form-chat"
+    | "form-review"
+    | "scan-document"
+    | "upload-file"
+    | "submit-link"
+    | "appointment-slots"
+    | "appointment-confirmation"
+    | "appointment-calendar"
+    | 'home'
+    | 'form-selection'
+    | 'form-submission'
+    | 'dashboard';
