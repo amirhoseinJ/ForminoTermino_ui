@@ -187,7 +187,7 @@ export default function UploadFilePage({ onBack, onComplete }: UploadFilePagePro
 
             {/* Content */}
             <div className="flex-1 p-6 flex flex-col">
-                {/* --- NEW: Progress bar during file read (before preview) --- */}
+                {/* --- Progress bar during file read (before preview) --- */}
                 {isProcessing && !uploadedFile ? (
                     <div className="flex flex-1 flex-col items-center justify-center">
                         <div className="glass-card p-8 rounded-2xl border border-glass-border w-full max-w-md">

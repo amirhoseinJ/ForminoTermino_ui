@@ -381,7 +381,7 @@ export default function UserProfile({onNavigate}: UserProfileProps) {
     //   setDocuments(prev => [...prev, newDoc]);
     // };
 
-// Replace your current handler with this:
+
     const handleDocumentDelete = async (id: string) => {
         // 1) Ask for confirmation
         if (!window.confirm("Are you sure you want to delete this document?")) {
