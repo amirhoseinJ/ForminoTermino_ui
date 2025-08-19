@@ -1,190 +1,300 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { MessageSquare, Calendar, User } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { Button } from "./ui/button";
-import { useApp } from "./contexts/AppContext";
 import MeinGenieLogo from "./MeinGenieLogo";
 import HelpTutorial from "./HelpTutorial";
 import GlobalAnimatedBackground from "./GlobalAnimatedBackground";
 import AnimatedHelpRobot from "./AnimatedHelpRobot";
-import ServiceCard from "./ServiceCard";
 import type { Page } from "../types/navigation";
-import type { LucideIcon } from 'lucide-react';   // icons are components
+import { EnhancedServiceIcon } from "./EnhancedServiceIcons";
 
 interface MainHubProps {
-  onNavigate: (page: Page) => void;
-  onLogout: () => void;
+    onNavigate: (page: Page) => void;
+    onLogout: () => void;
 }
 
 export default function MainHub({ onNavigate, onLogout }: MainHubProps) {
-  const { t } = useApp();
-  const [showHelp, setShowHelp] = useState(false);
+    const [showHelp, setShowHelp] = useState(false);
 
-    interface Service {
-        title: string;
-        subtitle: string;
-        description: string;
-        icon: LucideIcon;
-        color: 'purple' | 'green';   // or just string
-        glowColor: string;
-        page: Page;                  // ← important
-        delay: number;
-    }
+    // Hover/touch states for the Code-2 style affordances
+    const [hoveredService, setHoveredService] = useState<string | null>(null);
+    const [touchedService, setTouchedService] = useState<string | null>(null);
 
-    const services: Service[] = [
+    const handleServiceInteractionStart = (serviceId: string) => {
+        setHoveredService(serviceId);
+        setTouchedService(serviceId);
+    };
+
+    const handleServiceInteractionEnd = () => {
+        setHoveredService(null);
+        setTimeout(() => setTouchedService(null), 300);
+    };
+
+    const isServiceActive = (serviceId: string) =>
+        hoveredService === serviceId || touchedService === serviceId;
+
+    const services = [
         {
-            title: t('formino.title'),
-            subtitle: t('formino.subtitle'),
-            description: 'Intelligent help with forms, documents, and applications',
-            icon: MessageSquare,
-            color: 'purple',
-            glowColor: 'rgba(139, 92, 246, 0.6)',
-            page: 'formino',           // literal matches Page union
+            id: "formino",
+            title: "Formino",
+            description: "AI Form Assistant for instant document completion",
+            color: "purple" as const,
+            page: "formino" as Page,
+            features: ["Multi-language support", "Smart completion", "Document scanning"],
             delay: 0.4,
         },
         {
-            title: t('termino.title'),
-            subtitle: t('termino.subtitle'),
-            description: 'Voice-enabled scheduling and smart appointment management',
-            icon: Calendar,
-            color: 'green',
-            glowColor: 'rgba(16, 185, 129, 0.6)',
-            page: 'termino',
+            id: "termino",
+            title: "Termino",
+            description: "AI Appointment Booker for effortless scheduling",
+            color: "green" as const,
+            page: "termino" as Page,
+            features: ["Smart booking", "Calendar sync", "Reminder system"],
             delay: 0.6,
         },
     ];
 
-  return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Global Animated Background */}
-      <GlobalAnimatedBackground variant="primary" />
+    return (
+        <div
+            className="h-screen relative overflow-hidden flex flex-col"
+            style={{
+                background: "linear-gradient(135deg, #0f1419 0%, #1a237e 50%, #0d47a1 100%)",
+            }}
+        >
+            <GlobalAnimatedBackground variant="primary" />
 
-      {/* Header with prominent logo */}
-      <div className="glass-card glass-glow-purple relative z-10 px-4 py-6 border-b border-glass-border">
-        <div className="flex items-center justify-between">
+            {/* Compact Header (Code 2 style) */}
+            <div className="relative z-10 p-3 flex-shrink-0">
+                <div className="flex justify-between items-center">
+                    <motion.div
+                        className="flex items-center"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <MeinGenieLogo size="sm" animated={true} showText={true} />
+                    </motion.div>
 
-            <Button onClick={() => onLogout()}
-                    className=" rounded-full text-black bg-red-300 hover:bg-red-50/10 hover:text-neon-purple transition-all duration-300"
-            >
-                Logout
-            </Button>
+                    <motion.div
+                        className="flex gap-2 profile-buttons"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.7 }}
+                    >
+                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => onNavigate("profile")}
+                                className="hover:glass-glow-purple transition-all duration-300 p-2"
+                                style={{
+                                    background:
+                                        "linear-gradient(135deg, #0f1419 0%, #1a237e 50%, #0d47a1 100%)",
+                                    backdropFilter: "blur(20px)",
+                                    border: "1px solid rgba(139, 92, 246, 0.2)",
+                                }}
+                            >
+                                <motion.div
+                                    whileHover={{ rotate: [0, -10, 10, 0] }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <User className="w-4 h-4" />
+                                </motion.div>
+                            </Button>
+                        </motion.div>
+                    </motion.div>
+                </div>
+            </div>
 
+            {/* Main Content — Code 2 structure, literals for all labels */}
+            <div className="relative z-10 flex flex-col items-center justify-center flex-1 p-4 min-h-0">
+                <motion.div
+                    className="text-center mb-6"
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9 }}
+                >
+                    <h2 className="text-xl md:text-2xl mb-2">Welcome Back!</h2>
+                    <p className="text-sm text-muted-foreground">
+                        Choose your AI assistant to get started
+                    </p>
+                </motion.div>
+
+                {/* Service Cards — Code 2 visuals with EnhancedServiceIcon */}
+                <div className="flex gap-4 mb-6 w-full max-w-md">
+                    {services.map((service, index) => {
+                        const isActive = isServiceActive(service.id);
+
+                        return (
+                            <motion.div
+                                key={service.id}
+                                className={`glass-card p-4 rounded-xl cursor-pointer transition-all duration-300 relative overflow-hidden flex-1 ${
+                                    service.id === "formino"
+                                        ? "hover:glass-glow-purple"
+                                        : "hover:glass-glow-green"
+                                }`}
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1 + index * 0.1 }}
+                                whileHover={{ scale: 1.02, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                                onHoverStart={() => handleServiceInteractionStart(service.id)}
+                                onHoverEnd={handleServiceInteractionEnd}
+                                onTouchStart={() => handleServiceInteractionStart(service.id)}
+                                onTouchEnd={handleServiceInteractionEnd}
+                                onClick={() => onNavigate(service.page)}
+                            >
+                                {/* Active Glow */}
+                                {isActive && (
+                                    <motion.div
+                                        className="absolute inset-0 rounded-xl pointer-events-none"
+                                        style={{
+                                            background:
+                                                service.color === "purple"
+                                                    ? "radial-gradient(circle at center, rgba(139, 92, 246, 0.1), transparent 70%)"
+                                                    : "radial-gradient(circle at center, rgba(16, 185, 129, 0.1), transparent 70%)",
+                                            filter: "blur(20px)",
+                                        }}
+                                        animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                    />
+                                )}
+
+                                <div className="flex flex-col items-center text-center relative z-10">
+                                    <motion.div
+                                        className="flex justify-center mb-3 relative"
+                                        animate={isActive ? { scale: [1, 1.05, 1] } : {}}
+                                        transition={{ duration: 0.6 }}
+                                    >
+                                        <EnhancedServiceIcon
+                                            type={service.id as "formino" | "termino"}
+                                            size="small"
+                                            animated={true}
+                                            isHovered={isActive}
+                                        />
+                                    </motion.div>
+
+                                    <h3 className="text-sm mb-2">{service.title}</h3>
+                                    <p className="text-xs text-muted-foreground leading-tight line-clamp-2">
+                                        {service.description}
+                                    </p>
+
+                                    <motion.div
+                                        className="flex flex-wrap justify-center gap-1 mt-2 opacity-0"
+                                        animate={{ opacity: isActive ? 1 : 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        {service.features.slice(0, 2).map((feature, i) => (
+                                            <motion.span
+                                                key={i}
+                                                className={`text-xs px-2 py-0.5 rounded-full ${
+                                                    service.color === "purple"
+                                                        ? "bg-neon-purple/20 text-neon-purple"
+                                                        : "bg-neon-green/20 text-neon-green"
+                                                }`}
+                                                initial={{ scale: 0 }}
+                                                animate={isActive ? { scale: 1 } : { scale: 0 }}
+                                                transition={{ delay: i * 0.1 }}
+                                            >
+                                                {feature}
+                                            </motion.span>
+                                        ))}
+                                    </motion.div>
+
+                                    <motion.div
+                                        className="mt-2 opacity-0"
+                                        animate={{ opacity: isActive ? 1 : 0 }}
+                                        transition={{ duration: 0.2, delay: 0.1 }}
+                                    >
+                                        <div
+                                            className={`px-3 py-1 rounded-full text-xs border ${
+                                                service.color === "purple"
+                                                    ? "bg-neon-purple/20 text-neon-purple border-neon-purple/30"
+                                                    : "bg-neon-green/20 text-neon-green border-neon-green/30"
+                                            }`}
+                                        >
+                                            Tap to start →
+                                        </div>
+                                    </motion.div>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </div>
+
+                {/* Quick Actions — literals only */}
+                <motion.div
+                    className="flex flex-wrap justify-center gap-2"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.3 }}
+                >
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={onLogout}
+                            className="glass-card hover:glass-glow-green text-xs transition-all duration-300 px-3 py-2"
+                        >
+                            <motion.div
+                                whileHover={{ x: [0, -5, 5, 0] }}
+                                transition={{ duration: 0.4 }}
+                            >
+                                <LogOut className="w-3 h-3 mr-1" />
+                            </motion.div>
+                            Sign Out
+                        </Button>
+                    </motion.div>
+
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setShowHelp(true)}
+                            className="glass-card hover:glass-glow-purple text-xs transition-all duration-300 px-3 py-2"
+                        >
+                            Help
+                        </Button>
+                    </motion.div>
+                </motion.div>
+
+                {/* Subtle status line — literal text */}
+                {/*<motion.p*/}
+                {/*    className="mt-4 text-xs text-muted-foreground text-center"*/}
+                {/*    initial={{ opacity: 0, y: 10 }}*/}
+                {/*    animate={{ opacity: [0.7, 1, 0.7], y: 0 }}*/}
+                {/*    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}*/}
+                {/*>*/}
+                {/*    Status: Ready*/}
+                {/*</motion.p>*/}
+            </div>
+
+            {/* Bottom-right helper (keep Code-1 component, Code-2 placement/animation) */}
             <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex-1 flex justify-center mr-18"
-          >
-            <MeinGenieLogo size="lg" animated={true} showText={true} />
-          </motion.div>
-          
-          <motion.div
-            className="flex gap-2"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+                className="fixed bottom-4 right-4 z-20"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.5, type: "spring", stiffness: 200 }}
             >
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onNavigate('profile')}
-                className="w-10 h-10 p-0 rounded-full hover:bg-neon-purple/10 hover:text-neon-purple transition-all duration-300"
-                style={{
-                  boxShadow: '0 0 0 0 rgba(139, 92, 246, 0.4)',
-                  transition: 'box-shadow 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 0 20px rgba(139, 92, 246, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 0 0 0 rgba(139, 92, 246, 0.4)';
-                }}
-              >
-                <User className="h-5 w-5" />
-              </Button>
+                <motion.div
+                    className="relative cursor-pointer"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setShowHelp(true)}
+                >
+                    <AnimatedHelpRobot onClick={() => setShowHelp(true)} />
+                    <motion.div
+                        className="absolute -inset-2 border-2 border-neon-green/30 rounded-full"
+                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.7, 0.3] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                </motion.div>
             </motion.div>
 
-
-            {/*<motion.div*/}
-            {/*  whileHover={{ scale: 1.05 }}*/}
-            {/*  whileTap={{ scale: 0.95 }}*/}
-            {/*>*/}
-            {/*  <Button*/}
-            {/*    variant="ghost"*/}
-            {/*    size="sm"*/}
-            {/*    onClick={() => onNavigate('settings')}*/}
-            {/*    className="w-10 h-10 p-0 rounded-full hover:bg-neon-green/10 hover:text-neon-green transition-all duration-300"*/}
-            {/*    style={{*/}
-            {/*      boxShadow: '0 0 0 0 rgba(16, 185, 129, 0.4)',*/}
-            {/*      transition: 'box-shadow 0.3s ease'*/}
-            {/*    }}*/}
-            {/*    onMouseEnter={(e) => {*/}
-            {/*      e.currentTarget.style.boxShadow = '0 0 20px rgba(16, 185, 129, 0.4)';*/}
-            {/*    }}*/}
-            {/*    onMouseLeave={(e) => {*/}
-            {/*      e.currentTarget.style.boxShadow = '0 0 0 0 rgba(16, 185, 129, 0.4)';*/}
-            {/*    }}*/}
-            {/*  >*/}
-            {/*    <Settings className="h-5 w-5" />*/}
-            {/*  </Button>*/}
-            {/*</motion.div>*/}
-
-
-
-          </motion.div>
+            <HelpTutorial isOpen={showHelp} onClose={() => setShowHelp(false)} />
         </div>
-      </div>
-
-      {/* Main Service Icons */}
-      <div className="relative z-10 flex-1 flex items-center justify-center px-8 py-8">
-        <div className="w-full max-w-md space-y-8">
-          {services.map((service) => (
-            <ServiceCard
-              key={service.page}
-              title={service.title}
-              subtitle={service.subtitle}
-              description={service.description}
-              icon={service.icon}
-              color={service.color}
-              glowColor={service.glowColor}
-              delay={service.delay}
-              onClick={() => onNavigate(service.page)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Enhanced bottom status */}
-      <motion.div
-        className="relative z-10 p-6 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.6 }}
-      >
-        <motion.p 
-          className="text-xs text-muted-foreground"
-          animate={{
-            opacity: [0.7, 1, 0.7]
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          {t('hub.status')}
-        </motion.p>
-      </motion.div>
-
-      {/* Animated Help Robot (Bottom Right) */}
-      <AnimatedHelpRobot onClick={() => setShowHelp(true)} />
-
-      {/* Help Tutorial */}
-      <HelpTutorial isOpen={showHelp} onClose={() => setShowHelp(false)} />
-    </div>
-  );
+    );
 }

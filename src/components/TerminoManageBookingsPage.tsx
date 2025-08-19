@@ -572,7 +572,14 @@ export default function TerminoManageBookingsPage({
         `}
             </style>
 
-            <div className="min-h-screen bg-background relative overflow-hidden">
+            <div
+                className="min-h-dvh md:min-h-screen relative overflow-x-hidden overflow-y-auto flex flex-col"
+                style={{
+                    background:
+                        "linear-gradient(135deg, #0f1419 0%, #1a237e 50%, #0d47a1 100%)",
+                }}
+            >
+
                 {/* Subtle Background */}
                 <SubtleAnimatedBackground variant="minimal" />
 

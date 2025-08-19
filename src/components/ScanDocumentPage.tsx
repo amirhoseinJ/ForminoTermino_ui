@@ -222,7 +222,14 @@ export default function ScanDocumentPage({ onBack, onComplete }: ScanDocumentPag
 
 
     return (
-    <div className="min-h-screen bg-background flex flex-col">
+        <div
+            className="min-h-dvh md:min-h-screen relative overflow-x-hidden overflow-y-auto flex flex-col"
+            style={{
+                background:
+                    "linear-gradient(135deg, #0f1419 0%, #1a237e 50%, #0d47a1 100%)",
+            }}
+        >
+
       {/* Header */}
       <div className="glass-card glass-glow-green relative z-10 px-4 py-3 border-b border-glass-border flex-shrink-0">
         <div className="flex items-center justify-between">

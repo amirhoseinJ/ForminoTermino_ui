@@ -1,303 +1,426 @@
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { MessageSquare, Calendar } from "lucide-react";
 import { Button } from "./ui/button";
+import {
+    Sparkles,
+    Wand2,
+    ArrowRight,
+    Shield,
+    Zap,
+    Users,
+    Globe,
+    Clock,
+    CheckCircle,
+    Star,
+    MessageSquare,
+    Calendar,
+} from "lucide-react";
+import GlobalAnimatedBackground from "./GlobalAnimatedBackground";
 import { useApp } from "./contexts/AppContext";
 
 interface LandingPageProps {
-  onSignIn: () => void;
+    onSignIn: () => void;
 }
 
 export default function LandingPage({ onSignIn }: LandingPageProps) {
-  const { t } = useApp();
+    const { t } = useApp();
 
-  return (
-    <motion.div
-      className="min-h-screen bg-gradient-to-br from-background via-background to-purple-900/5 flex flex-col items-center justify-center relative overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
-      {/* Animated background particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 20 }, (_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-neon-purple/20 rounded-full"
+    // ---- UI reveal orchestration (styling/structure only) ----
+    const [showMagicSmoke, setShowMagicSmoke] = useState(false);
+    const [showSuperAppBox, setShowSuperAppBox] = useState(false);
+    const [showServices, setShowServices] = useState(false);
+
+    useEffect(() => {
+        const timer1 = setTimeout(() => setShowMagicSmoke(true), 1000);
+        const timer2 = setTimeout(() => setShowSuperAppBox(true), 2000);
+        const timer3 = setTimeout(() => setShowServices(true), 2800);
+        return () => {
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+            clearTimeout(timer3);
+        };
+    }, []);
+
+    const benefits = [
+        {
+            icon: Shield,
+            title: "Secure & Trustworthy",
+            description: "Highest security standards for your personal data",
+        },
+        {
+            icon: Zap,
+            title: "Lightning Fast & Efficient",
+            description: "AI-powered automation saves you valuable time",
+        },
+        {
+            icon: Users,
+            title: "User-Friendly",
+            description: "Intuitive interface designed for all ages",
+        },
+        {
+            icon: Globe,
+            title: "Available Everywhere",
+            description: "Seamless synchronization across all your devices",
+        },
+    ];
+
+    return (
+        <div
+            className="min-h-screen flex flex-col"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+                background:
+                    "linear-gradient(135deg, #0f1419 0%, #1a237e 50%, #0d47a1 100%)",
             }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0]
-            }}
-            transition={{
-              duration: 4 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 4,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-10 text-center flex-1 flex flex-col justify-center px-8">
-        {/* App Title */}
-        <motion.div
-          className="mb-16"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8, type: "spring" }}
         >
-          <h1 className="text-6xl font-bold bg-gradient-to-r from-neon-purple via-neon-green to-neon-purple bg-clip-text text-transparent mb-4">
-            {t('landing.title')}
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            {t('landing.subtitle')}
-          </p>
-        </motion.div>
+            {/* Global animated BG from code 2 */}
+            <GlobalAnimatedBackground variant="landing" />
 
-        {/* Animated Service Logos */}
-        <div className="flex items-center justify-center gap-16 mb-20">
-          {/* Formino Logo */}
-          <motion.div
-            className="flex flex-col items-center group"
-            initial={{ x: -100, opacity: 0, rotate: -10 }}
-            animate={{ x: 0, opacity: 1, rotate: 0 }}
-            transition={{ delay: 1, duration: 1, type: "spring", stiffness: 100 }}
-          >
-            <motion.div
-              className="relative mb-4"
-              animate={{ 
-                y: [0, -10, 0],
-                rotate: [0, 5, 0]
-              }}
-              transition={{ 
-                duration: 4, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }}
-            >
-              <motion.div
-                className="w-24 h-24 rounded-3xl bg-gradient-to-br from-neon-purple to-purple-600 flex items-center justify-center relative overflow-hidden"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {/* Glossy overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl" />
-                
-                {/* Icon */}
-                <MessageSquare className="h-12 w-12 text-white relative z-10" />
-                
-                {/* Glow effect */}
+            {/* ------------------------- Hero Section ------------------------- */}
+            <div className="flex-1 flex flex-col items-center justify-center px-6 py-16 relative overflow-hidden z-10">
+                {/* Floating decorative sparkles */}
+                <div className="absolute inset-0 pointer-events-none">
+                    <motion.div
+                        className="absolute top-20 left-10"
+                        animate={{ y: [0, -10, 0], opacity: [0.3, 0.8, 0.3] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                    >
+                        <Sparkles className="w-4 h-4 text-neon-purple" />
+                    </motion.div>
+                    <motion.div
+                        className="absolute top-32 right-16"
+                        animate={{ y: [0, -15, 0], opacity: [0.4, 0.9, 0.4] }}
+                        transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                    >
+                        <Sparkles className="w-3 h-3 text-neon-green" />
+                    </motion.div>
+                    <motion.div
+                        className="absolute bottom-40 left-20"
+                        animate={{ y: [0, -8, 0], opacity: [0.2, 0.7, 0.2] }}
+                        transition={{ duration: 3.5, repeat: Infinity, delay: 2 }}
+                    >
+                        <Sparkles className="w-5 h-5 text-neon-purple/70" />
+                    </motion.div>
+                </div>
+
+                {/* Centerpiece / "Genie" emblem */}
                 <motion.div
-                  className="absolute inset-0 rounded-3xl"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(139, 92, 246, 0.4), transparent)',
-                    filter: 'blur(20px)'
-                  }}
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.8, 0.5]
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </motion.div>
-            </motion.div>
-            
-            <motion.h3
-              className="text-2xl font-semibold text-neon-purple"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5, duration: 0.6 }}
-            >
-              {t('landing.formino')}
-            </motion.h3>
-            <motion.p
-              className="text-sm text-muted-foreground"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.7, duration: 0.6 }}
-            >
-              {t('landing.formino.subtitle')}
-            </motion.p>
-          </motion.div>
+                    className="text-center mb-8"
+                    initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                >
+                    <div className="relative inline-block">
+                        <motion.div
+                            className="relative"
+                            animate={{ y: [0, -8, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                            <div className="bg-gradient-to-br from-neon-purple to-purple-800 rounded-full p-8 shadow-2xl relative overflow-hidden glass-card">
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-full" />
+                                <Wand2 className="w-16 h-16 text-white relative z-10" />
+                                <motion.div
+                                    className="absolute -top-2 -right-2"
+                                    animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
+                                    transition={{ duration: 3, repeat: Infinity }}
+                                >
+                                    <Sparkles className="w-8 h-8 text-yellow-300" />
+                                </motion.div>
+                            </div>
+                        </motion.div>
 
-          {/* Connecting Line Animation */}
-          <motion.div
-            className="flex-1 h-px bg-gradient-to-r from-neon-purple via-transparent via-transparent to-neon-green relative"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 2, duration: 1.5, ease: "easeInOut" }}
-          >
-            {/* Flowing particles */}
-            <motion.div
-              className="absolute top-0 left-0 w-2 h-2 bg-neon-purple rounded-full -translate-y-1/2"
-              animate={{ x: [0, 200] }}
-              transition={{ 
-                duration: 3, 
-                repeat: Infinity, 
-                ease: "linear",
-                delay: 2.5
-              }}
-            />
-          </motion.div>
+                        {/* Magic Smoke Animation */}
+                        {showMagicSmoke && (
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4">
+                                {[...Array(8)].map((_, i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="absolute w-2 h-2 bg-gradient-to-t from-neon-purple to-transparent rounded-full"
+                                        style={{ left: `${Math.random() * 40 - 20}px` }}
+                                        animate={{
+                                            y: [-10, -60],
+                                            opacity: [0, 0.8, 0],
+                                            scale: [0.5, 1.2, 0.8],
+                                        }}
+                                        transition={{
+                                            duration: 3,
+                                            repeat: Infinity,
+                                            delay: i * 0.3,
+                                            ease: "easeOut",
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
 
-          {/* Termino Logo */}
-          <motion.div
-            className="flex flex-col items-center group"
-            initial={{ x: 100, opacity: 0, rotate: 10 }}
-            animate={{ x: 0, opacity: 1, rotate: 0 }}
-            transition={{ delay: 1.2, duration: 1, type: "spring", stiffness: 100 }}
-          >
-            <motion.div
-              className="relative mb-4"
-              animate={{ 
-                y: [0, -8, 0],
-                rotate: [0, -3, 0]
-              }}
-              transition={{ 
-                duration: 3.5, 
-                repeat: Infinity, 
-                ease: "easeInOut",
-                delay: 1
-              }}
-            >
-              <motion.div
-                className="w-24 h-24 rounded-3xl bg-gradient-to-br from-neon-green to-green-600 flex items-center justify-center relative overflow-hidden"
-                whileHover={{ scale: 1.1, rotate: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {/* Glossy overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl" />
-                
-                {/* Icon */}
-                <Calendar className="h-12 w-12 text-white relative z-10" />
-                
-                {/* Glow effect */}
+                    {/* Title/Subtitle use original i18n keys (main logic preserved) */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5, duration: 0.8 }}
+                        className="mt-6"
+                    >
+                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 drop-shadow-lg">
+                            {t("landing.title")}
+                        </h1>
+                        <p className="text-xl md:text-2xl text-foreground">
+                            {t("landing.subtitle")}
+                        </p>
+                    </motion.div>
+                </motion.div>
+
+                {/* --------------------- Super App Box (services) --------------------- */}
+                {showSuperAppBox && (
+                    <motion.div
+                        className="glass-card rounded-3xl p-8 max-w-md w-full mx-auto border border-glass-border"
+                        initial={{ opacity: 0, scale: 0.5, y: 50, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
+                    >
+                        <div className="text-center mb-6">
+                            <h2 className="text-2xl font-bold text-white mb-2">
+                                {t("landing.title")}
+                            </h2>
+                            <p className="text-muted-foreground">
+                                {/* short neutral tagline; style-only addition */}
+                                All your assistants in one place
+                            </p>
+                        </div>
+
+                        {/* Service Icons (use your original services & copy) */}
+                        {showServices && (
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                {/* Formino */}
+                                <motion.div
+                                    className="glass-card rounded-2xl p-4 hover:glass-glow-purple transition-all duration-300 cursor-pointer border border-glass-border"
+                                    initial={{ opacity: 0, scale: 0.3, y: 20 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.2 }}
+                                    whileHover={{ y: -4 }}
+                                >
+                                    <div className="text-center">
+                                        <div className="bg-neon-purple rounded-full p-3 w-12 h-12 mx-auto mb-3">
+                                            <MessageSquare className="w-6 h-6 text-white" />
+                                        </div>
+                                        <h3 className="text-white font-semibold text-sm">
+                                            {t("landing.formino")}
+                                        </h3>
+                                        <p className="text-muted-foreground text-xs mt-1">
+                                            {t("landing.formino.subtitle")}
+                                        </p>
+                                    </div>
+                                </motion.div>
+
+                                {/* Termino */}
+                                <motion.div
+                                    className="glass-card rounded-2xl p-4 hover:glass-glow-green transition-all duration-300 cursor-pointer border border-glass-border"
+                                    initial={{ opacity: 0, scale: 0.3, y: 20 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.4 }}
+                                    whileHover={{ y: -4 }}
+                                >
+                                    <div className="text-center">
+                                        <div className="bg-neon-green rounded-full p-3 w-12 h-12 mx-auto mb-3">
+                                            <Calendar className="w-6 h-6 text-white" />
+                                        </div>
+                                        <h3 className="text-white font-semibold text-sm">
+                                            {t("landing.termino")}
+                                        </h3>
+                                        <p className="text-muted-foreground text-xs mt-1">
+                                            {t("landing.termino.subtitle")}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            </div>
+                        )}
+
+                        {/* Coming Soon / placeholders to match structure */}
+                        {showServices && (
+                            <div className="grid grid-cols-3 gap-3">
+                                {[
+                                    { icon: MessageSquare, name: "Chatino" },
+                                    { icon: Globe, name: "Webino" },
+                                    { icon: Star, name: "More..." },
+                                ].map((service, index) => (
+                                    <motion.div
+                                        key={service.name}
+                                        className="glass-card rounded-xl p-3 opacity-60 border border-glass-border"
+                                        initial={{ opacity: 0, scale: 0.3 }}
+                                        animate={{ opacity: 0.6, scale: 1 }}
+                                        transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
+                                    >
+                                        <div className="text-center">
+                                            <div className="bg-muted-foreground rounded-full p-2 w-8 h-8 mx-auto mb-2">
+                                                <service.icon className="w-4 h-4 text-background" />
+                                            </div>
+                                            <h4 className="text-white text-xs font-medium">
+                                                {service.name}
+                                            </h4>
+                                            <p className="text-muted-foreground text-xs">Coming Soon</p>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
+                    </motion.div>
+                )}
+
+                {/* CTA Button (preserves onSignIn + i18n) */}
                 <motion.div
-                  className="absolute inset-0 rounded-3xl"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent)',
-                    filter: 'blur(20px)'
-                  }}
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.8, 0.5]
-                  }}
-                  transition={{ 
-                    duration: 2.5, 
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.5
-                  }}
-                />
-              </motion.div>
-            </motion.div>
-            
-            <motion.h3
-              className="text-2xl font-semibold text-neon-green"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.7, duration: 0.6 }}
-            >
-              {t('landing.termino')}
-            </motion.h3>
-            <motion.p
-              className="text-sm text-muted-foreground"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.9, duration: 0.6 }}
-            >
-              {t('landing.termino.subtitle')}
-            </motion.p>
-          </motion.div>
-        </div>
-      </div>
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 3.5, duration: 0.8 }}
+                    className="mt-8"
+                >
+                    <Button
+                        onClick={onSignIn}
+                        size="lg"
+                        className="bg-gradient-to-r from-neon-purple to-neon-green hover:from-neon-purple/90 hover:to-neon-green/90 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                        style={{ boxShadow: "0 0 30px rgba(139, 92, 246, 0.3)" }}
+                    >
+                        <Sparkles className="w-5 h-5 mr-2" />
+                        {t("landing.signin")}
+                        <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                </motion.div>
+            </div>
 
-      {/* Sign In Button */}
-        <motion.div
-            className="relative z-10 pb-12 px-8 w-full max-w-sm"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3, duration: 0.8 }}
-        >
-
-
-              {/* Centered glows */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="absolute w-64 h-64 bg-neon-purple/5 rounded-full blur-3xl" />
-                  <div className="absolute w-64 h-64 bg-neon-green/5 rounded-full blur-3xl mix-blend-screen" />
-              </div>
-
-          {/* Your pulsing wrapper & button */}
-          <motion.div
-              className="w-full h-14 rounded-2xl overflow-hidden"
-              animate={{
-                  scale: [1, 1.02, 1],
-                  boxShadow: [
-                      '0 0 20px rgba(139, 92, 246, 0.3)',
-                      '0 0 30px rgba(139, 92, 246, 0.5)',
-                      '0 0 20px rgba(139, 92, 246, 0.3)'
-                  ]
-              }}
-              transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-              }}
-          >
-
-              <Button
-                  onClick={onSignIn}
-                  className="w-full h-full text-lg
-               bg-gradient-to-r from-neon-purple to-purple-600
-               hover:from-neon-purple/90 hover:to-purple-600/90
-               relative overflow-hidden group"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-3">
-                  {t('landing.signin')}
-                </span>
-
-                  {/* Glossy overlay */}
-                  <div
-                      className="absolute inset-0
-                 bg-gradient-to-r from-white/20 to-transparent
-                 opacity-0 group-hover:opacity-100
-                 transition-opacity duration-300
-                 rounded-2xl"
-                  />
-
-                  {/* Ripple effect */}
-                  <motion.div
-                      className="absolute inset-0 bg-white/10 rounded-2xl"
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileHover={{ scale: 1, opacity: [0, 0.5, 0] }}
-                      transition={{ duration: 0.6 }}
-                  />
-              </Button>
+            {/* ------------------------- Info Section ------------------------- */}
+            <div className="glass-card border-t border-glass-border relative z-10">
+                <div className="max-w-6xl mx-auto px-6 py-16">
+                    {/* Section Header */}
+                    <motion.div
+                        className="text-center mb-12"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                            Why Choose {t("landing.title")}?
+                        </h2>
+                        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                            Discover the future of digital assistance with our revolutionary
+                            super app
+                        </p>
                     </motion.div>
 
-        {/* Subtle instruction */}
-        <motion.p
-          className="text-center text-xs text-muted-foreground mt-4 opacity-70"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.7 }}
-          transition={{ delay: 3.5, duration: 0.6 }}
-        >
-          Secure • Private • Intelligent
-        </motion.p>
-      </motion.div>
+                    {/* Benefits Grid */}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                        {benefits.map((benefit, index) => (
+                            <motion.div
+                                key={benefit.title}
+                                className="glass-card rounded-2xl p-6 text-center hover:glass-glow-purple transition-all duration-300 border border-glass-border"
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                whileHover={{ y: -8 }}
+                            >
+                                <div className="bg-gradient-to-br from-neon-purple to-purple-800 rounded-full p-4 w-16 h-16 mx-auto mb-4">
+                                    <benefit.icon className="w-8 h-8 text-white" />
+                                </div>
+                                <h3 className="text-white font-semibold text-lg mb-2">
+                                    {benefit.title}
+                                </h3>
+                                <p className="text-muted-foreground text-sm leading-relaxed">
+                                    {benefit.description}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
 
-      {/* Ambient glow effects */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-neon-purple/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-neon-green/5 rounded-full blur-3xl" />
-    </motion.div>
-  );
+                    {/* Feature Highlights (kept from code 2, neutral copy) */}
+                    <motion.div
+                        className="glass-card rounded-3xl p-8 border border-glass-border"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                    >
+                        <div className="grid md:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <h3 className="text-2xl font-bold text-white mb-6">
+                                    Your AI Assistants in Detail
+                                </h3>
+                                <div className="space-y-4">
+                                    <div className="flex items-start gap-3">
+                                        <CheckCircle className="w-6 h-6 text-neon-green mt-1 flex-shrink-0" />
+                                        <div>
+                                            <h4 className="text-white font-semibold">
+                                                {t("landing.formino")} — Smart Forms
+                                            </h4>
+                                            <p className="text-muted-foreground text-sm">
+                                                Automatic form filling and processing for all documents
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <CheckCircle className="w-6 h-6 text-neon-green mt-1 flex-shrink-0" />
+                                        <div>
+                                            <h4 className="text-white font-semibold">
+                                                {t("landing.termino")} — Smart Scheduling
+                                            </h4>
+                                            <p className="text-muted-foreground text-sm">
+                                                AI-powered appointment booking and calendar management
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <Clock className="w-6 h-6 text-neon-purple mt-1 flex-shrink-0" />
+                                        <div>
+                                            <h4 className="text-white font-semibold">24/7 Availability</h4>
+                                            <p className="text-muted-foreground text-sm">
+                                                Your AI assistants work around the clock for you
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="text-center">
+                                <div className="relative inline-block">
+                                    <motion.div
+                                        className="glass-card rounded-2xl p-8 border border-glass-border"
+                                        animate={{ y: [0, -10, 0] }}
+                                        transition={{
+                                            duration: 3,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                        }}
+                                    >
+                                        <div className="flex items-center justify-center gap-4 mb-4">
+                                            <div className="bg-neon-purple rounded-full p-3">
+                                                <MessageSquare className="w-6 h-6 text-white" />
+                                            </div>
+                                            <div className="bg-neon-green rounded-full p-3">
+                                                <Calendar className="w-6 h-6 text-white" />
+                                            </div>
+                                        </div>
+                                        <p className="text-white font-semibold">Perfect Collaboration</p>
+                                        <p className="text-muted-foreground text-sm">
+                                            Two AI assistants, infinite possibilities
+                                        </p>
+                                    </motion.div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Footer */}
+                    <motion.div
+                        className="text-center mt-16 pt-8 border-t border-glass-border"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                    >
+                        <p className="text-muted-foreground">
+                            © 2025 Mein Genie. Your magical journey into the future of digital
+                            assistance.
+                        </p>
+                    </motion.div>
+                </div>
+            </div>
+        </div>
+    );
 }

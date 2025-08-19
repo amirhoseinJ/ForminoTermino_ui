@@ -11,7 +11,6 @@ interface TerminoMainPageProps {
     onNavigate: (page: Page) => void;
 }
 
-
 const API_BASE = import.meta.env.VITE_API_BASE
 
 export default function TerminoSelectionPage({ onNavigate }: TerminoMainPageProps) {
@@ -67,8 +66,6 @@ export default function TerminoSelectionPage({ onNavigate }: TerminoMainPageProp
     // --------------------------
     // Helpers: API calls
     // --------------------------
-
-
 
     async function fetchTelegramStatus(): Promise<boolean> {
         const token = localStorage.getItem("accessToken");
@@ -274,7 +271,13 @@ export default function TerminoSelectionPage({ onNavigate }: TerminoMainPageProp
     };
 
     return (
-        <div className="min-h-screen bg-background relative overflow-hidden">
+        <div
+            className="min-h-dvh md:min-h-screen relative overflow-x-hidden overflow-y-auto flex flex-col"
+            style={{
+                background:
+                    "linear-gradient(135deg, #0f1419 0%, #1a237e 50%, #0d47a1 100%)",
+            }}
+        >
             {/* Subtle Animated Background */}
             <SubtleAnimatedBackground variant="secondary" />
 
@@ -400,204 +403,206 @@ export default function TerminoSelectionPage({ onNavigate }: TerminoMainPageProp
                     </motion.p>
                 </motion.div>
 
-                {/* Option Cards */}
-                <div className="space-y-4 max-w-md mx-auto">
-                    {options.map((option, index) => (
-                        <motion.div
-                            key={option.id}
-                            className="relative group cursor-pointer"
-                            initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            transition={{
-                                delay: 0.5 + index * 0.1,
-                                type: "spring",
-                                stiffness: 200,
-                                damping: 20,
-                            }}
-                            whileHover={{ scale: 1.02, y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => handleOptionClick(option.id)}
-                        >
-                            {/* Main Card */}
-                            <div
-                                className={`glass-card rounded-3xl p-6 relative overflow-hidden border-2 border-glass-border group-hover:border-opacity-60 transition-all duration-300`}
-                                style={{
-                                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
-                                    transition: "box-shadow 0.3s ease",
+                {/* Option Cards — HORIZONTAL LAYOUT */}
+                <div className="max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {options.map((option, index) => (
+                            <motion.div
+                                key={option.id}
+                                className="relative group cursor-pointer"
+                                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                transition={{
+                                    delay: 0.5 + index * 0.1,
+                                    type: "spring",
+                                    stiffness: 200,
+                                    damping: 20,
                                 }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.boxShadow = `0 0 30px ${option.glowColor}, 0 8px 32px rgba(0, 0, 0, 0.3)`;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.boxShadow = "0 8px 32px rgba(0, 0, 0, 0.3)";
-                                }}
+                                whileHover={{ scale: 1.02, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => handleOptionClick(option.id)}
                             >
-                                {/* Animated Background Gradient */}
-                                <motion.div
-                                    className={`absolute inset-0 bg-gradient-to-br ${option.color} opacity-10 rounded-3xl`}
-                                    animate={{
-                                        opacity: [0.1, 0.15, 0.1],
+                                {/* Main Card */}
+                                <div
+                                    className={`glass-card rounded-3xl p-6 relative overflow-hidden border-2 border-glass-border group-hover:border-opacity-60 transition-all duration-300 h-full`}
+                                    style={{
+                                        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+                                        transition: "box-shadow 0.3s ease",
                                     }}
-                                    transition={{
-                                        duration: 4,
-                                        repeat: Infinity,
-                                        ease: "easeInOut",
-                                        delay: index * 0.5,
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.boxShadow = `0 0 30px ${option.glowColor}, 0 8px 32px rgba(0, 0, 0, 0.3)`;
                                     }}
-                                />
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.boxShadow = "0 8px 32px rgba(0, 0, 0, 0.3)";
+                                    }}
+                                >
+                                    {/* Animated Background Gradient */}
+                                    <motion.div
+                                        className={`absolute inset-0 bg-gradient-to-br ${option.color} opacity-10 rounded-3xl`}
+                                        animate={{
+                                            opacity: [0.1, 0.15, 0.1],
+                                        }}
+                                        transition={{
+                                            duration: 4,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                            delay: index * 0.5,
+                                        }}
+                                    />
 
-                                {/* Content */}
-                                <div className="relative z-10">
-                                    {/* Header with Icon and Avatar */}
-                                    <div className="flex items-start gap-4 mb-4">
-                                        {/* Icon */}
-                                        <motion.div
-                                            className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${option.color} flex items-center justify-center relative overflow-hidden shadow-lg`}
-                                            animate={{
-                                                boxShadow: [
-                                                    `0 0 20px ${option.glowColor}`,
-                                                    `0 0 30px ${option.glowColor}`,
-                                                    `0 0 20px ${option.glowColor}`,
-                                                ],
-                                            }}
-                                            transition={{ duration: 3, repeat: Infinity }}
-                                            whileHover={{ rotate: [0, -2, 2, 0] }}
-                                        >
-                                            {/* Glossy overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl" />
-
+                                    {/* Content */}
+                                    <div className="relative z-10">
+                                        {/* Header with Icon and Avatar */}
+                                        <div className="flex items-start gap-4 mb-4">
+                                            {/* Icon */}
                                             <motion.div
+                                                className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${option.color} flex items-center justify-center relative overflow-hidden shadow-lg`}
                                                 animate={{
-                                                    scale: [1, 1.05, 1],
+                                                    boxShadow: [
+                                                        `0 0 20px ${option.glowColor}`,
+                                                        `0 0 30px ${option.glowColor}`,
+                                                        `0 0 20px ${option.glowColor}`,
+                                                    ],
                                                 }}
-                                                transition={{
-                                                    duration: 2,
-                                                    repeat: Infinity,
-                                                    ease: "easeInOut",
-                                                }}
+                                                transition={{ duration: 3, repeat: Infinity }}
+                                                whileHover={{ rotate: [0, -2, 2, 0] }}
                                             >
-                                                <option.icon className="h-8 w-8 text-white relative z-10" />
+                                                {/* Glossy overlay */}
+                                                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl" />
+
+                                                <motion.div
+                                                    animate={{
+                                                        scale: [1, 1.05, 1],
+                                                    }}
+                                                    transition={{
+                                                        duration: 2,
+                                                        repeat: Infinity,
+                                                        ease: "easeInOut",
+                                                    }}
+                                                >
+                                                    <option.icon className="h-8 w-8 text-white relative z-10" />
+                                                </motion.div>
+
+                                                {/* Pulse effect */}
+                                                <motion.div
+                                                    className="absolute inset-0 rounded-2xl bg-white/10"
+                                                    animate={{ opacity: [0, 0.3, 0] }}
+                                                    transition={{ duration: 2, repeat: Infinity }}
+                                                />
                                             </motion.div>
 
-                                            {/* Pulse effect */}
-                                            <motion.div
-                                                className="absolute inset-0 rounded-2xl bg-white/10"
-                                                animate={{ opacity: [0, 0.3, 0] }}
-                                                transition={{ duration: 2, repeat: Infinity }}
-                                            />
-                                        </motion.div>
+                                            {/* Avatar */}
+                                            <div className="flex-shrink-0">
+                                                <UnifiedGenieAvatar
+                                                    size="sm"
+                                                    expression={option.avatar as any}
+                                                    glowColor={option.id === "ai-book" ? "blue" : option.id === "self-book" ? "green" : "purple"}
+                                                />
+                                            </div>
+                                        </div>
 
-                                        {/* Avatar */}
-                                        <div className="flex-shrink-0">
-                                            <UnifiedGenieAvatar
-                                                size="sm"
-                                                expression={option.avatar as any}
-                                                glowColor={option.id === "ai-book" ? "blue" : option.id === "self-book" ? "green" : "purple"}
-                                            />
+                                        {/* Title */}
+                                        <motion.h3
+                                            className="text-base font-semibold text-foreground mb-2 leading-tight"
+                                            whileHover={{ x: 2 }}
+                                            transition={{ type: "spring", stiffness: 300 }}
+                                        >
+                                            {option.title}
+                                        </motion.h3>
+
+                                        {/* Description */}
+                                        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{option.description}</p>
+
+                                        {/* Features */}
+                                        <div className="space-y-1">
+                                            {option.features.map((feature, i) => (
+                                                <motion.div
+                                                    key={i}
+                                                    className="flex items-center gap-2"
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: 0.8 + index * 0.1 + i * 0.05 }}
+                                                >
+                                                    <div className={`w-1 h-1 rounded-full bg-gradient-to-r ${option.color}`} />
+                                                    <span className="text-xs text-muted-foreground">{feature}</span>
+                                                </motion.div>
+                                            ))}
                                         </div>
                                     </div>
 
-                                    {/* Title */}
-                                    <motion.h3
-                                        className="text-base font-semibold text-foreground mb-2 leading-tight"
-                                        whileHover={{ x: 2 }}
-                                        transition={{ type: "spring", stiffness: 300 }}
-                                    >
-                                        {option.title}
-                                    </motion.h3>
-
-                                    {/* Description */}
-                                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{option.description}</p>
-
-                                    {/* Features */}
-                                    <div className="space-y-1">
-                                        {option.features.map((feature, i) => (
+                                    {/* Interactive particles on hover */}
+                                    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                                        {Array.from({ length: 4 }, (_, i) => (
                                             <motion.div
                                                 key={i}
-                                                className="flex items-center gap-2"
-                                                initial={{ opacity: 0, x: -10 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 0.8 + index * 0.1 + i * 0.05 }}
-                                            >
-                                                <div className={`w-1 h-1 rounded-full bg-gradient-to-r ${option.color}`} />
-                                                <span className="text-xs text-muted-foreground">{feature}</span>
-                                            </motion.div>
+                                                className="absolute w-1 h-1 rounded-full"
+                                                style={{
+                                                    backgroundColor: option.glowColor.replace("0.4", "0.8"),
+                                                    left: `${30 + Math.random() * 40}%`,
+                                                    top: `${30 + Math.random() * 40}%`,
+                                                }}
+                                                initial={{ scale: 0, opacity: 0 }}
+                                                whileHover={{
+                                                    scale: [0, 1, 0],
+                                                    opacity: [0, 1, 0],
+                                                    y: [0, -15, 0],
+                                                }}
+                                                transition={{
+                                                    duration: 1.2,
+                                                    delay: i * 0.1,
+                                                    ease: "easeOut",
+                                                }}
+                                            />
                                         ))}
                                     </div>
-                                </div>
 
-                                {/* Interactive particles on hover */}
-                                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
-                                    {Array.from({ length: 4 }, (_, i) => (
-                                        <motion.div
-                                            key={i}
-                                            className="absolute w-1 h-1 rounded-full"
-                                            style={{
-                                                backgroundColor: option.glowColor.replace("0.4", "0.8"),
-                                                left: `${30 + Math.random() * 40}%`,
-                                                top: `${30 + Math.random() * 40}%`,
-                                            }}
-                                            initial={{ scale: 0, opacity: 0 }}
-                                            whileHover={{
-                                                scale: [0, 1, 0],
-                                                opacity: [0, 1, 0],
-                                                y: [0, -15, 0],
-                                            }}
-                                            transition={{
-                                                duration: 1.2,
-                                                delay: i * 0.1,
-                                                ease: "easeOut",
-                                            }}
-                                        />
-                                    ))}
-                                </div>
-
-                                {/* Selection indicator */}
-                                <motion.div
-                                    className={`absolute top-4 right-4 w-6 h-6 rounded-full bg-gradient-to-r ${option.color} flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                                    whileHover={{ scale: 1.1 }}
-                                >
-                                    <motion.div initial={{ scale: 0 }} whileHover={{ scale: 1 }} transition={{ delay: 0.1 }}>
-                                        <Sparkles className="h-3 w-3 text-white" />
+                                    {/* Selection indicator */}
+                                    <motion.div
+                                        className={`absolute top-4 right-4 w-6 h-6 rounded-full bg-gradient-to-r ${option.color} flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                                        whileHover={{ scale: 1.1 }}
+                                    >
+                                        <motion.div initial={{ scale: 0 }} whileHover={{ scale: 1 }} transition={{ delay: 0.1 }}>
+                                            <Sparkles className="h-3 w-3 text-white" />
+                                        </motion.div>
                                     </motion.div>
-                                </motion.div>
 
-                                {/* Animated border */}
+                                    {/* Animated border */}
+                                    <motion.div
+                                        className={`absolute inset-0 rounded-3xl border-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                                        style={{
+                                            borderImage: `linear-gradient(45deg, ${option.glowColor}, transparent, ${option.glowColor}) 1`,
+                                        }}
+                                        animate={{
+                                            background: [
+                                                `linear-gradient(0deg, ${option.glowColor}10, transparent)`,
+                                                `linear-gradient(180deg, ${option.glowColor}15, transparent)`,
+                                                `linear-gradient(360deg, ${option.glowColor}10, transparent)`,
+                                            ],
+                                        }}
+                                        transition={{ duration: 3, repeat: Infinity }}
+                                    />
+                                </div>
+
+                                {/* Enhanced glow pulse */}
                                 <motion.div
-                                    className={`absolute inset-0 rounded-3xl border-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                                    className="absolute inset-0 rounded-3xl pointer-events-none"
                                     style={{
-                                        borderImage: `linear-gradient(45deg, ${option.glowColor}, transparent, ${option.glowColor}) 1`,
+                                        background: `radial-gradient(circle, ${option.glowColor}, transparent)`,
+                                        filter: "blur(20px)",
                                     }}
                                     animate={{
-                                        background: [
-                                            `linear-gradient(0deg, ${option.glowColor}10, transparent)`,
-                                            `linear-gradient(180deg, ${option.glowColor}15, transparent)`,
-                                            `linear-gradient(360deg, ${option.glowColor}10, transparent)`,
-                                        ],
+                                        scale: [1, 1.05, 1],
+                                        opacity: [0.3, 0.5, 0.3],
                                     }}
-                                    transition={{ duration: 3, repeat: Infinity }}
+                                    transition={{
+                                        duration: 2.5 + index * 0.3,
+                                        repeat: Infinity,
+                                        ease: "easeInOut",
+                                    }}
                                 />
-                            </div>
-
-                            {/* Enhanced glow pulse */}
-                            <motion.div
-                                className="absolute inset-0 rounded-3xl pointer-events-none"
-                                style={{
-                                    background: `radial-gradient(circle, ${option.glowColor}, transparent)`,
-                                    filter: "blur(20px)",
-                                }}
-                                animate={{
-                                    scale: [1, 1.05, 1],
-                                    opacity: [0.3, 0.5, 0.3],
-                                }}
-                                transition={{
-                                    duration: 2.5 + index * 0.3,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                }}
-                            />
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Bottom Helper Text */}
